@@ -10,7 +10,8 @@ const Login = () => {
     const navigate = useNavigate();
     const { register, handleSubmit } = useForm();
   const onSubmit = data => {
-    console.log(data);
+    // localStorage.setItem("user","azad");
+    // console.log(data);
     const email = data.email;
     const password = data.password;
     axios.post("http://localhost:8000/api/v1/sign-in",{
@@ -19,8 +20,11 @@ const Login = () => {
 
     })
     .then(res=>{
-        console.log(res.data.response.message)
+        // console.log(res.data.response.token);
+        const user = res.data.response.message;
+        localStorage.setItem("user",user);
         if(res.data.response.message ==="Login Successfull"){
+          localStorage.setItem("token",res.data.response.token)
             Swal.fire({
                 position: "top-end",
                 icon: "success",
@@ -32,6 +36,8 @@ const Login = () => {
         }
     })
     .catch(err=>console.log(err))
+    // console.log(data);
+    // localStorage.setItem("data",data);
     
   };
 
