@@ -7,6 +7,11 @@ import Home from "../Pages/Home/Home/Home";
 import Login from "../Pages/Users/Login/Login";
 import Register from "../Pages/Users/Register/Register";
 import Dashboard from "../layout/Dashboard";
+import DashboardHome from "../Pages/Dashboard/Dashboard/DashboardHome";
+import UserManagement from "../Pages/Dashboard/Access/UserManagement/Usermanagement";
+import RoleManagement from "../Pages/Dashboard/Access/RoleManagement/RoleManagement";
+import PostManagement from "../Pages/Dashboard/ContentManagement/PostManagement/PostManagement";
+import NewPost from "../Pages/Dashboard/ContentManagement/PostManagement/NewPost";
 
 
   const router = createBrowserRouter([
@@ -30,7 +35,30 @@ import Dashboard from "../layout/Dashboard";
     },
     {
       path:"/dashboard",
-      element:<Dashboard></Dashboard>
+      element:<Dashboard></Dashboard>,
+      children: [
+        {
+          path:"/dashboard",
+          element: <DashboardHome></DashboardHome>
+        },
+        {
+          path: "/dashboard/usermanage",
+          element: <UserManagement></UserManagement>
+        },
+        {
+          path: "/dashboard/rolemanage",
+          element: <RoleManagement></RoleManagement>
+        },
+        {
+          path: "/dashboard/postmanage",
+          element: <PostManagement></PostManagement>
+        },
+        {
+          path: "/dashboard/newpost",
+          element:<NewPost></NewPost>
+        }
+
+      ]
     }
   ]);
 
