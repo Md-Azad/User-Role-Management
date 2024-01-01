@@ -1,4 +1,4 @@
-// import axios from "axios";
+
 import { createContext, useEffect, useState } from "react";
 
 import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, updateProfile } from "firebase/auth";

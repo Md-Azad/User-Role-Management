@@ -1,22 +1,34 @@
-
-
-
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-
-
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../Providers/AuthProvider";
+import Swal from "sweetalert2";
 
 const Login = () => {
+  const { register, handleSubmit } = useForm();
+  const navigate = useNavigate();
+  const {signIn} = useContext(AuthContext);
 
-    const { register, handleSubmit } = useForm();
-    
-    
   const onSubmit = (data) => {
     const email = data.email;
     const password = data.password;
-    console.log(email,password);
-  }
-
+    signIn(email,password)
+    .then(res=>{
+      console.log(res.user.email)
+      if(res.user.email){
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Login Successfull",
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+      navigate('/dashboard')
+    })
+    .catch(err=>console.log(err))
+    
+  };
 
   return (
     <div className="hero min-h-screen bg-base-200">
@@ -59,7 +71,6 @@ const Login = () => {
               </label>
             </div>
             <div className="form-control mt-6">
-            
               <input className="btn btn-primary" type="submit" value="Login" />
             </div>
           </form>

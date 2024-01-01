@@ -2,11 +2,12 @@ import { useContext } from "react";
 import { useForm } from "react-hook-form";
 
 import { AuthContext } from "../../../Providers/AuthProvider";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const Register = () => {
   const { register, handleSubmit } = useForm();
+  const navigate = useNavigate();
 
   const { createUser, updateUserProfile } = useContext(AuthContext);
   const onSubmit = (data) => {
@@ -15,7 +16,7 @@ const Register = () => {
     const password = data.password;
     createUser(email, password)
       .then(() => {
-        const savedUser = { email, name,role:'super Admin' }
+        const savedUser = { email, name }
         updateUserProfile(name)
         .then(() => {
           fetch("http://localhost:5000/users", {
@@ -27,7 +28,7 @@ const Register = () => {
           })
             .then((res) => res.json())
             .then((data) => {
-              console.log("after hitting hello insertedId:", data)
+              
              if(data.insertedId){
               Swal.fire({
                 position: "top-end",
@@ -37,6 +38,7 @@ const Register = () => {
                 timer: 1500
               });
              }
+             navigate('/')
             });
         });
       })
