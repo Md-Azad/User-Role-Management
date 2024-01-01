@@ -1,40 +1,48 @@
-
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 
 import { AuthContext } from "../../../Providers/AuthProvider";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Register = () => {
-   
   const { register, handleSubmit } = useForm();
-  const {createUser,updateUserProfile} = useContext(AuthContext);
+
+  const { createUser, updateUserProfile } = useContext(AuthContext);
   const onSubmit = (data) => {
-    
     const email = data.email;
     const name = data.name;
     const password = data.password;
-    createUser(email,password)
-    .then(res=>{
-        console.log(res.user)
+    createUser(email, password)
+      .then(() => {
+        const savedUser = { email, name,role:'super Admin' }
         updateUserProfile(name)
-        .then(()=>{
-          const savedUser = { name, email}
-          fetch("http://localhost:5000/users",{
-            method: 'POST',
-            headers:{
-              "content-type": "application/json"
+        .then(() => {
+          fetch("http://localhost:5000/users", {
+            method: "POST",
+            headers: {
+              "content-Type": "application/json",
             },
-            body: JSON.stringify(savedUser)
+            body: JSON.stringify(savedUser),
           })
-          .then(res=>res.json())
-          .then(data=>console.log(data))
-        })
-      
-    })
-    .catch(err=>{
+            .then((res) => res.json())
+            .then((data) => {
+              console.log("after hitting hello insertedId:", data)
+             if(data.insertedId){
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "User Created",
+                showConfirmButton: false,
+                timer: 1500
+              });
+             }
+            });
+        });
+      })
+      .catch((err) => {
         console.log(err);
-    })
+      });
   };
   return (
     <div className="hero min-h-screen bg-base-200">
@@ -71,6 +79,7 @@ const Register = () => {
                 {...register("email", { required: true })}
               />
             </div>
+
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Password</span>
@@ -88,7 +97,11 @@ const Register = () => {
               </label>
             </div>
             <div className="form-control mt-6">
-              <input className="btn btn-primary" type="submit" value="Register" />
+              <input
+                className="btn btn-primary"
+                type="submit"
+                value="Register"
+              />
             </div>
           </form>
           <Link to="/login">Have an Account? Login.</Link>
