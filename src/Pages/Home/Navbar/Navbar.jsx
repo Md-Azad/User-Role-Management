@@ -1,38 +1,15 @@
-import axios from "axios";
-import { useState } from "react";
+// import axios from "axios";
+// import { useState } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../Providers/AuthProvider";
 
 const Navbar = () => {
-  const userStatus = localStorage.getItem("user");
+  
 
-  const token = localStorage.getItem("token");
-  const [loginStatus, setLoginStatus] = useState(userStatus);
-
-  const handleLogout = () => {
-    axios
-      .post(
-        "http://localhost:8000/api/v1/logout",
-        {},
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
-      )
-      .then((res) => {
-        // console.log(res.data.response.message);
-
-        if (res.data.response.message === "Logout succesfull") {
-          localStorage.removeItem("user");
-          localStorage.removeItem("token");
-          setLoginStatus("");
-        }
-      })
-      .catch((error) => {
-        console.error("Logout failed:", error);
-      });
-  };
-
+  const signout = useContext(AuthContext);
+  const {loginStatus,handleLogout} = signout;
+  
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1">

@@ -1,45 +1,21 @@
 
 
-import axios from "axios";
+
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
+
 
 
 const Login = () => {
-    const navigate = useNavigate();
+
     const { register, handleSubmit } = useForm();
-  const onSubmit = data => {
-    // localStorage.setItem("user","azad");
-    // console.log(data);
+    
+    
+  const onSubmit = (data) => {
     const email = data.email;
     const password = data.password;
-    axios.post("http://localhost:8000/api/v1/sign-in",{
-        email,
-        password
-
-    })
-    .then(res=>{
-        // console.log(res.data.response.token);
-        const user = res.data.response.message;
-        localStorage.setItem("user",user);
-        if(res.data.response.message ==="Login Successfull"){
-          localStorage.setItem("token",res.data.response.token)
-            Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: "Login Successful",
-                showConfirmButton: false,
-                timer: 1500
-              });
-              navigate('/');
-        }
-    })
-    .catch(err=>console.log(err))
-    // console.log(data);
-    // localStorage.setItem("data",data);
-    
-  };
+    console.log(email,password);
+  }
 
 
   return (
@@ -87,6 +63,7 @@ const Login = () => {
               <input className="btn btn-primary" type="submit" value="Login" />
             </div>
           </form>
+          <Link to="/register">Do not have an account? create Now?</Link>
         </div>
       </div>
     </div>

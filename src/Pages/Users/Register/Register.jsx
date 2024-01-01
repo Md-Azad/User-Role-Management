@@ -1,34 +1,36 @@
-import axios from "axios";
+
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+
+import { AuthContext } from "../../../Providers/AuthProvider";
+import { Link } from "react-router-dom";
 
 const Register = () => {
-    const navigate = useNavigate();
+   
   const { register, handleSubmit } = useForm();
+  const {createUser,updateUserProfile} = useContext(AuthContext);
   const onSubmit = (data) => {
-    // console.log(data);
+    
     const email = data.email;
     const name = data.name;
     const password = data.password;
-    // console.log(email,name,password);
-    axios.post("http://localhost:8000/api/v1/sign-up",{
-        name,
-        email,
-        password
-    })
+    createUser(email,password)
     .then(res=>{
-        console.log(res);
-        if(res.status===200){
-            Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: "User Created Successfully",
-                showConfirmButton: false,
-                timer: 1500
-              });
-            navigate('/')
-        }
+        console.log(res.user)
+        updateUserProfile(name)
+        .then(()=>{
+          const savedUser = { name, email}
+          fetch("http://localhost:5000/users",{
+            method: 'POST',
+            headers:{
+              "content-type": "application/json"
+            },
+            body: JSON.stringify(savedUser)
+          })
+          .then(res=>res.json())
+          .then(data=>console.log(data))
+        })
+      
     })
     .catch(err=>{
         console.log(err);
@@ -89,6 +91,7 @@ const Register = () => {
               <input className="btn btn-primary" type="submit" value="Register" />
             </div>
           </form>
+          <Link to="/login">Have an Account? Login.</Link>
         </div>
       </div>
     </div>
