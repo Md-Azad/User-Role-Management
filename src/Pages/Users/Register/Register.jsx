@@ -16,7 +16,9 @@ const Register = () => {
     const password = data.password;
     createUser(email, password)
       .then(() => {
+        
         const savedUser = { email, name }
+        
         updateUserProfile(name)
         .then(() => {
           fetch("http://localhost:5000/users", {

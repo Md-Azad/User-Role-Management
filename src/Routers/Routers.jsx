@@ -12,6 +12,8 @@ import UserManagement from "../Pages/Dashboard/Access/UserManagement/Usermanagem
 import RoleManagement from "../Pages/Dashboard/Access/RoleManagement/RoleManagement";
 import PostManagement from "../Pages/Dashboard/ContentManagement/PostManagement/PostManagement";
 import NewPost from "../Pages/Dashboard/ContentManagement/PostManagement/NewPost";
+import Permit from "../Pages/Dashboard/Access/UserManagement/Permit";
+import PrivateRoutes from "./PrivateRoutes";
 
 
   const router = createBrowserRouter([
@@ -35,7 +37,7 @@ import NewPost from "../Pages/Dashboard/ContentManagement/PostManagement/NewPost
     },
     {
       path:"/dashboard",
-      element:<Dashboard></Dashboard>,
+      element:<PrivateRoutes><Dashboard></Dashboard></PrivateRoutes>,
       children: [
         {
           path:"/dashboard",
@@ -56,6 +58,10 @@ import NewPost from "../Pages/Dashboard/ContentManagement/PostManagement/NewPost
         {
           path: "/dashboard/newpost",
           element:<NewPost></NewPost>
+        },
+        {
+          path: "/dashboard/roleedit/:email",
+          element: <Permit></Permit>
         }
 
       ]
