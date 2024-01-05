@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
+import { AuthContext } from "../Providers/AuthProvider";
+import axios from "axios";
 
 const Dashboard = () => {
   const [accessOpen, setAccessOpen] = useState(false);
   const [contentOpen, setContentOpen] = useState(false);
+  const {user} = useContext(AuthContext);
+  console.log(user.email);
 
   const toggleAccess = () => {
     setAccessOpen(!accessOpen);
@@ -12,6 +16,20 @@ const Dashboard = () => {
   const toggleContent =()=>{
       setContentOpen(!contentOpen)
   }
+
+  useEffect(()=>{
+    const email = user.email;
+    axios.get(`http://localhost:5000/users/${email}`,{
+      
+    })
+    .then(res=>{
+      console.log(res.data.permission.Permission[0])
+    })
+    .catch(err=>console.error(err))
+  },[user.email])
+
+
+
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
