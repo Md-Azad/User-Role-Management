@@ -3,6 +3,7 @@ import { createContext, useEffect, useState } from "react";
 
 import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { app } from "../firebase/firebase.config";
+import axios from "axios";
 
 
 export const AuthContext = createContext();
@@ -47,13 +48,53 @@ useEffect(()=>{
      }
  },[])
 
+ 
+ const [accessPermission, setAccessPermission] = useState("");
+ const [userPosition, setUserPosition] = useState("");
+
+
+
+
+useEffect(() => {
+    const fetchData = async () => {
+      if (user && user.email) {
+        const email = user.email;
+  
+        try {
+          const res = await axios.get(`http://localhost:5000/users/${email}`, {});
+          const permit = res.data.permission?.Permission;
+          const position = res.data.position;
+  
+          if (position) {
+            setUserPosition(position);
+          } else {
+            console.log("normal user");
+          }
+  
+          if (permit) {
+            setAccessPermission(permit);
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    };
+  
+    fetchData();
+  }, [user]);
+
+
+ 
+
   const authInfo = {
         loading,
         user,
         createUser,
         signIn,
         updateUserProfile,
-        logOut
+        logOut,
+        accessPermission,
+        userPosition
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

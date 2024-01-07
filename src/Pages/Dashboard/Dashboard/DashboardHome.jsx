@@ -3,8 +3,10 @@ import { AuthContext } from "../../../Providers/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
 
+
 const DashboardHome = () => {
     const {logOut} = useContext(AuthContext);
+   
     const navigation = useNavigate();
     const handleSignOut=()=>{
         logOut()

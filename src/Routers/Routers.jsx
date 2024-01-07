@@ -14,6 +14,7 @@ import PostManagement from "../Pages/Dashboard/ContentManagement/PostManagement/
 import NewPost from "../Pages/Dashboard/ContentManagement/PostManagement/NewPost";
 import Permit from "../Pages/Dashboard/Access/UserManagement/Permit";
 import PrivateRoutes from "./PrivateRoutes";
+import Manage from "../Pages/Dashboard/Manage/Manage";
 
 
   const router = createBrowserRouter([
@@ -46,6 +47,10 @@ import PrivateRoutes from "./PrivateRoutes";
         {
           path: "/dashboard/usermanage",
           element: <UserManagement></UserManagement>
+        },
+        {
+          path: "/dashboard/manage",
+          element: <Manage></Manage>
         },
         {
           path: "/dashboard/rolemanage",
