@@ -82,15 +82,7 @@ const PostManagement = () => {
                       )}
                     </>
                   )}
-                  {/* <span className="text-3xl">
-                    <MdOutlinePreview />
-                  </span>
-                  <span className="text-3xl">
-                    <MdEditNote />
-                  </span>
-                  <span className="text-3xl">
-                    <MdDeleteForever />
-                  </span> */}
+                 
                 </td>
               </tr>
             ))}
