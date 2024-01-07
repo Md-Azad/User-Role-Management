@@ -18,6 +18,16 @@ const PostManagement = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  const handleDeletePost=(id) =>{
+    
+    axios.get(`http://localhost:5000/dashboard/post/${id}`)
+    .then(response=>{
+      console.log("res from delete",response)
+
+    })
+    .catch(err=>console.error(err))
+  }
+
   return (
     <div className="w-full min-h-screen px-12 mt-4">
       <div className="flex flex-row-reverse">
@@ -50,9 +60,8 @@ const PostManagement = () => {
                       <span className="text-3xl">
                         <MdEditNote />
                       </span>
-                      <span className="text-3xl">
-                        <MdDeleteForever />
-                      </span>
+                     
+                      <button onClick={()=>handleDeletePost(post._id)} className="btn btn-sm btn-error text-2xl"><MdDeleteForever /></button>
                     </>
                   ) : (
                     <>
@@ -73,15 +82,7 @@ const PostManagement = () => {
                       )}
                     </>
                   )}
-                  {/* <span className="text-3xl">
-                    <MdOutlinePreview />
-                  </span>
-                  <span className="text-3xl">
-                    <MdEditNote />
-                  </span>
-                  <span className="text-3xl">
-                    <MdDeleteForever />
-                  </span> */}
+                 
                 </td>
               </tr>
             ))}

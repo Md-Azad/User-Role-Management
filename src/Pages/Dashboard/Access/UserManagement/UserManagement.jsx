@@ -10,7 +10,7 @@ const UserManagement = () => {
     useEffect(()=>{
         axios.get("http://localhost:5000/users")
         .then(res =>{
-            // console.log(res.data);
+            
             setUser(res.data)
         })
         .catch(err=>console.error(err))
@@ -39,7 +39,7 @@ const UserManagement = () => {
               <td>{user.name}</td>
               <td>{user.email}</td>
               <td><button ><Link to={`/dashboard/roleedit/${user.email}`} state={{ from: user.email }}>action</Link></button></td>
-              {/* <td><button onClick={()=>handleUserRole(user.email)} >action</button></td> */}
+             
             </tr>)}
             
           </tbody>
