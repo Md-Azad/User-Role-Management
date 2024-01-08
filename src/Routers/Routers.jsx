@@ -15,6 +15,7 @@ import NewPost from "../Pages/Dashboard/ContentManagement/PostManagement/NewPost
 import Permit from "../Pages/Dashboard/Access/UserManagement/Permit";
 import PrivateRoutes from "./PrivateRoutes";
 import Manage from "../Pages/Dashboard/Manage/Manage";
+import EditPost from "../Pages/Dashboard/ContentManagement/EditPost/EditPost";
 
 
   const router = createBrowserRouter([
@@ -67,6 +68,10 @@ import Manage from "../Pages/Dashboard/Manage/Manage";
         {
           path: "/dashboard/roleedit/:email",
           element: <Permit></Permit>
+        },
+        {
+          path: "/dashboard/postedit",
+          element: <EditPost></EditPost>
         }
 
       ]

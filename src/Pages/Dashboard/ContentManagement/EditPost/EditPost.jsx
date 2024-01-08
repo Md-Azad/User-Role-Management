@@ -1,19 +1,48 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+
 import { useForm } from "react-hook-form";
+import { useLocation, useNavigate } from "react-router-dom";
 
-
-
-const Manage = () => {
+const EditPost = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const location = useLocation();
+  const postId = location.state?.from;
+  const navigate = useNavigate();
+
+  const [post, setPost] = useState([])
+
+  useEffect(()=>{
+    
+    axios
+      .get(`http://localhost:5000/dashboard/postedit/${postId}`)
+      .then((resPost) => {
+        
+        setPost(resPost.data)
+      })
+      .catch((er) => console.error(er));
+  },[postId])
+  
 
   const onSubmit = (data) => {
     console.log(data.label,data.dis);
+    axios.patch(`http://localhost:5000/dashboard/postedit/${postId}`,{
+        title:data.label,
+        discription:data.dis
+    })
+    .then(resUpdate=>{
+        console.log(resUpdate)
+        if(resUpdate.data.modifiedCount>0){
+            navigate('/dashboard/postmanage')
+        }
+    })
+    .catch(err=>console.error(err))
   };
   console.log(errors);
-
 
   return (
     <div className="hero min-h-screen ">
@@ -25,7 +54,8 @@ const Manage = () => {
             </label>
             <input
               type="text"
-              defaultValue="titlesdf"
+              
+              defaultValue={post.title}
               className="input input-bordered"
               {...register("label", { required: true, maxLength: 100 })}
             />
@@ -35,7 +65,8 @@ const Manage = () => {
           </label>
           <textarea
             className="textarea textarea-primary"
-            defaultValue="details"
+            
+            defaultValue={post.discription}
             {...register("dis", { required: true, maxLength: 200 })}
           ></textarea>
 
@@ -46,8 +77,7 @@ const Manage = () => {
         
       </div>
     </div>
-    
   );
 };
 
-export default Manage;
+export default EditPost;
