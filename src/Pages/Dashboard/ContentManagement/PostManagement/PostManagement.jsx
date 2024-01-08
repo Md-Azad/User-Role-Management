@@ -57,11 +57,11 @@ const PostManagement = () => {
                       <span className="text-3xl">
                         <MdOutlinePreview />
                       </span>
-                      <span className="text-3xl">
-                        <MdEditNote />
-                      </span>
+                      
+                        <button className="btn btn-xs btn-warning text-2xl" ><Link to="/dashboard/postedit" state={{ from: post._id }}><MdEditNote /></Link></button>
+                      
                      
-                      <button onClick={()=>handleDeletePost(post._id)} className="btn btn-sm btn-error text-2xl"><MdDeleteForever /></button>
+                      <button onClick={()=>handleDeletePost(post._id)} className="btn btn-xs btn-error text-2xl"><MdDeleteForever /></button>
                     </>
                   ) : (
                     <>
