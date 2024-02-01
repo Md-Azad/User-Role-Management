@@ -8,10 +8,11 @@ const EditPost = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    
   } = useForm();
   const location = useLocation();
   const postId = location.state?.from;
+  console.log(postId)
   const navigate = useNavigate();
 
   const [post, setPost] = useState([])
@@ -21,7 +22,7 @@ const EditPost = () => {
     axios
       .get(`http://localhost:5000/dashboard/postedit/${postId}`)
       .then((resPost) => {
-        
+        console.log("receiving post: ", resPost)
         setPost(resPost.data)
       })
       .catch((er) => console.error(er));
@@ -31,6 +32,7 @@ const EditPost = () => {
   const onSubmit = (data) => {
     console.log(data.label,data.dis);
     axios.patch(`http://localhost:5000/dashboard/postedit/${postId}`,{
+        ...post,
         title:data.label,
         discription:data.dis
     })
@@ -42,7 +44,7 @@ const EditPost = () => {
     })
     .catch(err=>console.error(err))
   };
-  console.log(errors);
+  
 
   return (
     <div className="hero min-h-screen ">
@@ -71,7 +73,7 @@ const EditPost = () => {
           ></textarea>
 
           <div className="form-control mt-6">
-            <input className="btn btn-primary" type="submit" value="POST" />
+            <input className="btn btn-primary" type="submit" value="Edit" />
           </div>
         </form>
         

@@ -18,15 +18,17 @@ const PostManagement = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  const handleDeletePost=(id) =>{
-    
-    axios.get(`http://localhost:5000/dashboard/post/${id}`)
-    .then(response=>{
-      console.log("res from delete",response)
-
-    })
-    .catch(err=>console.error(err))
-  }
+  const handleDeletePost = (id) => {
+    axios
+      .delete(`http://localhost:5000/dashboard/post/${id}`)
+      .then((response) => {
+        if (response.data.deletedCount > 0) {
+          const filteredList = posts.filter((post) => post._id !== id);
+          setPosts(filteredList);
+        }
+      })
+      .catch((err) => console.error(err));
+  };
 
   return (
     <div className="w-full min-h-screen px-12 mt-4">
@@ -57,24 +59,41 @@ const PostManagement = () => {
                       <span className="text-3xl">
                         <MdOutlinePreview />
                       </span>
-                      
-                        <button className="btn btn-xs btn-warning text-2xl" ><Link to="/dashboard/postedit" state={{ from: post._id }}><MdEditNote /></Link></button>
-                      
-                     
-                      <button onClick={()=>handleDeletePost(post._id)} className="btn btn-xs btn-error text-2xl"><MdDeleteForever /></button>
+
+                      <button className="btn btn-xs btn-warning text-2xl">
+                        <Link
+                          to="/dashboard/postedit"
+                          state={{ from: post._id }}
+                        >
+                          <MdEditNote />
+                        </Link>
+                      </button>
+
+                      <button
+                        onClick={() => handleDeletePost(post._id)}
+                        className="btn btn-xs btn-error text-2xl"
+                      >
+                        <MdDeleteForever />
+                      </button>
                     </>
                   ) : (
                     <>
                       {accessPermission.includes("View Post") ? (
                         <td>
                           {accessPermission.includes("View Post") && (
-                            <button className="btn btn-xs"><MdOutlinePreview /></button>
+                            <button className="btn btn-xs">
+                              <MdOutlinePreview />
+                            </button>
                           )}
                           {accessPermission.includes("Edit Post") && (
-                            <button className="btn btn-xs"><MdEditNote /></button>
+                            <button className="btn btn-xs">
+                              <MdEditNote />
+                            </button>
                           )}
                           {accessPermission.includes("Delete Post") && (
-                            <button className="btn btn-xs"><MdDeleteForever /></button>
+                            <button className="btn btn-xs">
+                              <MdDeleteForever />
+                            </button>
                           )}
                         </td>
                       ) : (
@@ -82,7 +101,6 @@ const PostManagement = () => {
                       )}
                     </>
                   )}
-                 
                 </td>
               </tr>
             ))}

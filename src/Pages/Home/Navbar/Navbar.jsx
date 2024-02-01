@@ -1,5 +1,4 @@
-// import axios from "axios";
-// import { useState } from "react";
+
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../Providers/AuthProvider";
@@ -13,8 +12,8 @@ const Navbar = () => {
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">daisyUI</a>
-        <a className="btn btn-ghost text-xl">Home</a>
+        <a className="btn btn-ghost text-xl">User Management</a>
+       
       </div>
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1">

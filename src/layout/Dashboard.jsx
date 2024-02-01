@@ -6,6 +6,7 @@ const Dashboard = () => {
   const [accessOpen, setAccessOpen] = useState(false);
   const [contentOpen, setContentOpen] = useState(false);
   const { accessPermission, userPosition } = useContext(AuthContext);
+  // console.log(accessPermission,userPosition);
 
   const toggleAccess = () => {
     setAccessOpen(!accessOpen);
@@ -72,59 +73,8 @@ const Dashboard = () => {
                     <li>
                       <Link to="/dashboard/postmanage">Post Manage</Link>
                     </li>
-                  </ul>
-                )}
-              </li>
-            </>
-          ) : (
-            <></>
-          )}
-
-          {accessPermission.includes("View User") ? (
-            <>
-              <li>
-                <Link to="/dashboard">Dashboard</Link>
-              </li>
-
-              <li>
-                <a onClick={toggleAccess}>Access</a>
-                {accessOpen && (
-                  <ul>
                     <li>
-                      {" "}
-                      <Link to="/dashboard/usermanage">
-                        User Management
-                      </Link>{" "}
-                    </li>
-
-                    {accessPermission.includes("View Role") ? (
-                      <>
-                        <li>
-                          {" "}
-                          <Link to="/dashboard/rolemanage">
-                            Role Management
-                          </Link>{" "}
-                        </li>
-                      </>
-                    ) : (
-                      <></>
-                    )}
-                  </ul>
-                )}
-              </li>
-            </>
-          ) : (
-            <></>
-          )}
-          {accessPermission.includes("View Post") ? (
-            <>
-              {" "}
-              <li>
-                <a onClick={toggleContent}>Content management</a>
-                {contentOpen && (
-                  <ul>
-                    <li>
-                      <Link to="/dashboard/postmanage">Post Manage</Link>
+                      <Link to="/dashboard/manage"> Manage</Link>
                     </li>
                   </ul>
                 )}
@@ -133,10 +83,6 @@ const Dashboard = () => {
           ) : (
             <></>
           )}
-
-          <li>
-            <Link to="/dashboard/manage"> Manage</Link>
-          </li>
         </ul>
       </div>
     </div>
